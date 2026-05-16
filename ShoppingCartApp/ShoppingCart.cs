@@ -12,34 +12,49 @@ namespace ShoppingCartApp
         // Ha az item neve már szerepel (kis-nagybetű független), növeli a mennyiségét
         public void AddItem(string name, double unitPrice, int quantity)
         {
-            throw new NotImplementedException();
+            CartItem foundItem = _items.Where(x => x.Name.ToLower() == name.ToLower()).FirstOrDefault();
+            if (foundItem != null)
+            {
+                foundItem.UpdateQuantity(foundItem.Quantity + quantity); 
+            }
+            else
+            {
+                CartItem uj = new CartItem(name, unitPrice, quantity);
+                _items.Add(uj);
+            }
         }
 
         // true ha megtalálta és törölte, false ha nem szerepelt
         public bool RemoveItem(string name)
         {
-            throw new NotImplementedException();
+            CartItem talal = _items.Where(x => x.Name.ToLower() == name.ToLower()).FirstOrDefault();
+            if (talal != null)
+            {
+                _items.Remove(talal);
+                return true;
+            }
+            else { return false; }
         }
 
         public int GetItemCount()
         {
-            throw new NotImplementedException();
+            return _items.Count;
         }
 
         // Összeg = minden item (UnitPrice * Quantity) összege
         public decimal GetTotal()
         {
-            throw new NotImplementedException();
+            return (decimal)/*castolás tipus átalakítás*/ _items.Sum(x => x.GetLineTotal());
         }
 
         public IReadOnlyList<CartItem> GetItems()
         {
-            throw new NotImplementedException();
+            return _items;
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _items.Clear();
         }
     }
 }
