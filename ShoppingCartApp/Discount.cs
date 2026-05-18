@@ -22,6 +22,10 @@ namespace ShoppingCartApp
         // Példa: ApplyFixed(100, 50) -> 50
         public double ApplyFixed(double total, double discountAmount)
         {
+            if (discountAmount < 0)
+            {
+                throw new ArgumentException("A discountAmount nem lehet kisebb mint nulla");
+            }
             double kedvezmenyesAr = total - discountAmount;
             if (kedvezmenyesAr < 0)
             {
@@ -31,6 +35,8 @@ namespace ShoppingCartApp
             {
                 return kedvezmenyesAr;
             }
+            
+            
         }
 
         // true ha discountValue > 0
